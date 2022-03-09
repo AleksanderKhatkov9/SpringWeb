@@ -327,6 +327,13 @@
                     <div class="col-sm-6">
                         <a href="#" class="btn btn-success" id = "submit" data-toggle="modal"><i
                                 class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
+
+                        <form th:action="@{/}">
+                            Search:
+                            <input type="text" name="keyword" id="keyword" size="15" th:value="${keyword}">
+                            <button type="submit" name="submit" id="submits">Submit</button>
+                            <button type="button" name="cancel" id="cancel">Cancel</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -334,6 +341,12 @@
             <script>
                 $('#submit').click(function () {
                     location.href = "new";
+                });
+            </script>
+
+            <script>
+                $('#cancel').click(function () {
+                    location.href = "[[@{/}]]";
                 });
             </script>
 
@@ -364,8 +377,12 @@
                     </td>
                 </tbody>
             </table>
+
+
+
             <div class="clearfix">
                 <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+
                 <ul class="pagination">
                     <li class="page-item disabled"><a href="#">Previous</a></li>
                     <li class="page-item"><a href="#" class="page-link">1</a></li>
@@ -376,6 +393,22 @@
                     <li class="page-item"><a href="#" class="page-link">Next</a></li>
                 </ul>
             </div>
+
+
+<!--            <div class="clearfix">-->
+<!--                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>-->
+<!--                <ul class="pagination" th:if="${pageCatalog.totalPages >0}">-->
+<!--                    <li class="page-item disabled" th:each="pageCatalog :${numbers}"><a th:href="@{'/page=' + ${pageCatalog}}"-->
+<!--                    th:text="${pageCatalog + 1}">Previous</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+
+
+
+
+
+
+
         </div>
     </div>
 </div>

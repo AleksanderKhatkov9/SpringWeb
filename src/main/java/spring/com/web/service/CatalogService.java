@@ -15,9 +15,13 @@ public class CatalogService {
     @Autowired
     private CatalogRepository repo;
 
-    public List<Catalog> listAll() {
+    public List<Catalog> listAll(String keyword) {
+        if(keyword !=null){
+            return repo.search(keyword);
+        }
         return repo.findAll();
     }
+
 
     public void save(Catalog catalog) {
         repo.save(catalog);
@@ -30,4 +34,5 @@ public class CatalogService {
     public void delete(long id) {
         repo.deleteById(id);
     }
+
 }
