@@ -28,8 +28,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Image</label>
-                    <input type="text" class="form-control" th:field="*{image}">
+                    <label>Description</label>
+                    <textarea class="form-control" th:field="*{description}">
+                    </textarea>
                 </div>
                 <div class="form-group">
                     <label>Title</label>
@@ -54,10 +55,6 @@
                     location.href = "http://localhost:8080/";
                 });
             </script>
-
-
-
-
 
         </form>
     </div>

@@ -1,16 +1,20 @@
 package spring.com.web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.com.web.entities.Catalog;
 import spring.com.web.repositories.CatalogRepository;
+import spring.com.web.repositories.Pagination;
 
 import java.util.List;
 
 @Service
 @Transactional
-public class CatalogService {
+public class CatalogService implements Pagination {
 
     @Autowired
     private CatalogRepository repo;
@@ -21,7 +25,6 @@ public class CatalogService {
         }
         return repo.findAll();
     }
-
 
     public void save(Catalog catalog) {
         repo.save(catalog);
@@ -35,4 +38,11 @@ public class CatalogService {
         repo.deleteById(id);
     }
 
+
+    @Override
+    public Page<Catalog> findByPagination(int pageNo, int size) {
+            // TODO Auto-generated method stub
+            Pageable pageable = PageRequest.of(pageNo-1,size);
+            return repo.findAll(pageable);
+    }
 }

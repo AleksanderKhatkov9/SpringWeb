@@ -2,7 +2,7 @@
 use spring_web;
 CREATE TABLE catalog (
    id INT PRIMARY KEY AUTO_INCREMENT,
-   image varchar(255) NOT NULL,
+   description varchar(500) NOT NULL,
    title varchar(255) NOT NULL,
    price varchar(255) NOT NULL,
    date  varchar(45) NOT NULL

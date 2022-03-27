@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Catalog {
 
     private Long id;
-    private String image;
+    private String description;
     private String title;
     private String price;
     private String date;
@@ -17,9 +17,9 @@ public class Catalog {
     public Catalog() {
     }
 
-    public Catalog(Long id, String image, String title, String price, String date) {
+    public Catalog(Long id, String description, String title, String price, String date) {
         this.id = id;
-        this.image = image;
+        this.description = description;
         this.title = title;
         this.price = price;
         this.date = date;
@@ -35,12 +35,12 @@ public class Catalog {
         this.id = id;
     }
 
-    public String getImage() {
-        return image;
+    public String getDescription() {
+        return description;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTitle() {

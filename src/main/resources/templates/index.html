@@ -325,8 +325,8 @@
                         <h2>Catalog <b>Product</b></h2>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#" class="btn btn-success" id = "submit" data-toggle="modal"><i
-                                class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
+                        <a href="#" class="btn btn-success" id="submit" data-toggle="modal"><i
+                                class="material-icons">&#xE147;</i> <span>Add New Catalog</span></a>
 
                         <form th:action="@{/}">
                             Search:
@@ -355,7 +355,7 @@
                 <thead>
                 <tr>
                     <th>N</th>
-                    <th>Image</th>
+                    <th>Description</th>
                     <th>Title</th>
                     <th>Price</th>
                     <th>Date</th>
@@ -367,49 +367,50 @@
                 <tbody>
                 <tr th:each="catalog : ${listCatalog}">
                     <td th:text="${catalog.id}">N</td>
-                    <td th:text="${catalog.image}">Image</td>
+                    <td th:text="${catalog.description}">Description</td>
                     <td th:text="${catalog.title}">Title</td>
                     <td th:text="${catalog.price}">Price</td>
                     <td th:text="${catalog.date}">Date</td>
                     <td>
-                        <a th:href="@{'/edit/' + ${catalog.id}}" class="edit"><i class="material-icons" data-toggle="Edit" title="">&#xE254;</i></a>
-                        <a th:href="@{'/delete/' + ${catalog.id}}" class="delete"><i class="material-icons" data-toggle="Delete" title="">&#xE872;</i></a>
+                        <a th:href="@{'/edit/' + ${catalog.id}}" class="edit"><i class="material-icons"
+                                                                                 data-toggle="Edit"
+                                                                                 title="">&#xE254;</i></a>
+                        <a th:href="@{'/delete/' + ${catalog.id}}" class="delete"><i class="material-icons"
+                                                                                     data-toggle="Delete" title="">&#xE872;</i></a>
                     </td>
+                </tr>
                 </tbody>
             </table>
 
 
-
             <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                <div th:if="${totalPages > 1}">
+                    <div class="hint-text">
+                        Total Rows: [[${totalRecords}]]
+                    </div>
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+                            <span th:unless="${currentPage < totalPages}">Next</span>
+                        </li>
 
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
+                        <li class="page-item">
+                                <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                    <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+                                    <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+                                </span>
+                        </li>
+
+                        <li class="page-item">
+                            <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage}}">Last</a>
+                            <span th:unless="${currentPage < totalPages}">Last</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-
-<!--            <div class="clearfix">-->
-<!--                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>-->
-<!--                <ul class="pagination" th:if="${pageCatalog.totalPages >0}">-->
-<!--                    <li class="page-item disabled" th:each="pageCatalog :${numbers}"><a th:href="@{'/page=' + ${pageCatalog}}"-->
-<!--                    th:text="${pageCatalog + 1}">Previous</a></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-
-
-
-
-
-
-
         </div>
+
+
     </div>
 </div>
 

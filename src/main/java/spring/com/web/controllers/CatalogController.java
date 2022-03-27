@@ -2,9 +2,9 @@ package spring.com.web.controllers;
 
 import java.util.List;
 import java.util.stream.IntStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +14,10 @@ import spring.com.web.entities.Catalog;
 import spring.com.web.repositories.CatalogRepository;
 import spring.com.web.service.CatalogService;
 
-/**@author Sasha Hatkov
- * @// TODO: 10.03.2022  Добавить возможность пагинации
- *
- *
+/**
+ * @author Sasha Hatkov
+ * @ TODO: 10.03.2022  Добавить возможность пагинации +
  */
-
 
 
 @Controller
@@ -32,9 +30,12 @@ public class CatalogController {
     @RequestMapping("/")
     public String viewHomePage(Model model, @Param("keyword") String keyword) {
         List<Catalog> listCatalog = service.listAll(keyword);
-        model.addAttribute("listCatalog", listCatalog);
-        model.addAttribute("keyword", keyword);
-        return "index";
+        if (keyword != null) {
+            model.addAttribute("listCatalog", listCatalog);
+            model.addAttribute("keyword", keyword);
+            return "index";
+        }
+        return display(1, model);
     }
 
     @RequestMapping("/new")
@@ -64,16 +65,16 @@ public class CatalogController {
         return "redirect:/";
     }
 
-    @GetMapping("/page")
-    public String listCatalog(
-            Model model,
-//            @RequestParam(value = "size", required = false, defaultValue = "0") Integer size,
-            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page) {
-        Page<Catalog> pageCatalog = repository.findAll(PageRequest.of(page, 3));
-        model.addAttribute("pageCatalog", pageCatalog);
-        model.addAttribute("numbers", IntStream.range(0, pageCatalog.getTotalPages()).toArray());
+    @GetMapping("/page/{pageNo}")
+    public String display(@PathVariable(value = "pageNo") int pageNo, Model m) {
+        int pageSize = 2;   // How many records on per page
+        Page<Catalog> page = service.findByPagination(pageNo, pageSize);
+        List<Catalog> list = page.getContent();
+        m.addAttribute("currentPage", pageNo);
+        m.addAttribute("totalPages", page.getTotalPages());
+        m.addAttribute("totalRecords", page.getTotalElements());
+        m.addAttribute("listCatalog", list);
         return "index";
-
     }
 
 }
